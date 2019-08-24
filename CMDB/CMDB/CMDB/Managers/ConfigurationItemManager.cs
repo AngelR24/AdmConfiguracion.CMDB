@@ -1,6 +1,7 @@
 ﻿using CMDB.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CMDB.Managers
@@ -47,12 +48,51 @@ namespace CMDB.Managers
 
         public void AddDependency()
         {
+            Console.Clear();
+            Console.WriteLine("Add Dependency");
+            ListItems();
+
+            Console.WriteLine(new string('-', 20));
+            Console.Write("Main Configuration Item: ");
+            string mainCI = Console.ReadLine();
+            var mainItem = _dbContext.ConfigurationItems.Find(mainCI.ToUpper());
+            if (mainItem == null)
+            {
+                _menuManager.InvalidInputMessage("CI was not found");
+                AddDependency();
+            }
+            Console.Write("Dependant Configuration Item: ");
+            string dependantCI = Console.ReadLine();
+            var dependantItem = _dbContext.ConfigurationItems.Find(dependantCI.ToUpper());
+            if (dependantItem == null)
+            {
+                _menuManager.InvalidInputMessage("CI was not found");
+                AddDependency();
+            }
+
+            var dependency = new Dependency
+            {
+                BaseCIName = mainCI.ToUpper(),
+                DependencyCIName = dependantCI.ToUpper()
+            };
+
+
+            if (_menuManager.ConfirmMessage("Are you sure you want to add this Dependency"))
+            {
+                _dbContext.Dependencies.Add(dependency);
+                _dbContext.SaveChanges();
+            }
 
         }
 
         public void ListItems()
         {
+            var items = _dbContext.ConfigurationItems.ToList();
 
+            foreach (var item in items)
+            {
+                Console.WriteLine($"*{item.Name}  {item.Version}");
+            }
         }
 
     }

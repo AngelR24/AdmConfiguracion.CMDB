@@ -53,16 +53,14 @@ namespace CMDB.Managers
         private void AddNewCI()
         {
             Console.Clear();
-            Console.WriteLine("ADD NEW CI");
-            _menuManager.InvalidInputMessage("Press key to continue..");
+            _configItemManager.Create();
             LoadMainScreen();
         }
 
         private void AddCIDependency()
         {
             Console.Clear();
-            Console.WriteLine("Add dependency");
-            _menuManager.InvalidInputMessage("Press key to continue..");
+            _configItemManager.AddDependency();
             LoadMainScreen();
         }
     }
