@@ -14,5 +14,6 @@ namespace CMDB.Models
         public string Responsible { get; set; }
 
         public List<Dependency> DependencyItems { get; set; }
+        public List<Dependency> BaseItems { get; set; }
     }
 }
