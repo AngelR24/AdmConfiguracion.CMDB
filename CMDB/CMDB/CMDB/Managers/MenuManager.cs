@@ -58,6 +58,18 @@ namespace CMDB.Managers
             Console.ReadKey();
         }
 
+        public bool ConfirmMessage(string message = "Are you sure you want to continue?")
+        {
+            Console.Write($"{message} (Y/N) -->");
+            string input = Console.ReadLine();
+
+            if (input.ToUpper() == "Y")
+            {
+                return true;
+            }
+            return false;
+        }
+
         private void ExitApplication()
         {
             Environment.Exit(0);

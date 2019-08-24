@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CMDB.Models;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CMDB.Managers
 {
@@ -13,6 +13,8 @@ namespace CMDB.Managers
             "Add dependency CI" //Option 2
         };
         private readonly Dictionary<int, Action> _menuActions;
+        private readonly AppDbContext _dbContext;
+        private readonly ConfigurationItemManager _configItemManager;
 
         public ConsoleManager()
         {
@@ -22,6 +24,8 @@ namespace CMDB.Managers
                 {1, AddNewCI },
                 {2, AddCIDependency }
             };
+            _dbContext = new AppDbContext();
+            _configItemManager = new ConfigurationItemManager(_dbContext, _menuManager);
         }
 
         public void Start()

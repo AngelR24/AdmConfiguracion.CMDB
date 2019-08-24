@@ -12,7 +12,7 @@ namespace CMDB.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"");
+            optionsBuilder.UseSqlServer(@"Server=WINDOWS-Q9PBF99\SQLEXPRESS;Database=CMDB;User=sa;Password=sa1234;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
