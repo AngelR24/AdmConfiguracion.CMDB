@@ -42,6 +42,12 @@ namespace CMDB.Managers
                 return -1;
             }
 
+            if (option == _menuItems.Count + 1)
+            {
+                ExitApplication();
+                return -1;
+            }
+
             return option;
           
         }
@@ -50,6 +56,11 @@ namespace CMDB.Managers
         {
             Console.WriteLine(message);
             Console.ReadKey();
+        }
+
+        private void ExitApplication()
+        {
+            Environment.Exit(0);
         }
     }
 }
