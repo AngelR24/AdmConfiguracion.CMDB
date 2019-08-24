@@ -59,7 +59,7 @@ namespace CMDB.Managers
             if (mainItem == null)
             {
                 _menuManager.InvalidInputMessage("CI was not found");
-                AddDependency();
+                return;
             }
             Console.Write("Dependant Configuration Item: ");
             string dependantCI = Console.ReadLine();
@@ -67,7 +67,8 @@ namespace CMDB.Managers
             if (dependantItem == null)
             {
                 _menuManager.InvalidInputMessage("CI was not found");
-                AddDependency();
+                return;
+                
             }
 
             var dependency = new Dependency
@@ -83,6 +84,7 @@ namespace CMDB.Managers
                 _dbContext.SaveChanges();
             }
 
+            
         }
 
         public void ListItems()
