@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CMDB.Managers;
+using System;
 
 namespace CMDB
 {
@@ -6,7 +7,8 @@ namespace CMDB
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ConsoleManager manager = new ConsoleManager();
+            manager.Start();
         }
     }
 }
