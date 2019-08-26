@@ -10,7 +10,8 @@ namespace CMDB.Managers
         private readonly List<string> _menuItems = new List<string>
         {
             "Add new CI", //Option 1
-            "Add dependency CI" //Option 2
+            "Add dependency CI", //Option 2
+            "List dependencies" //Option 3
         };
         private readonly Dictionary<int, Action> _menuActions;
         private readonly AppDbContext _dbContext;
@@ -22,7 +23,8 @@ namespace CMDB.Managers
             _menuActions = new Dictionary<int, Action>
             {
                 {1, AddNewCI },
-                {2, AddCIDependency }
+                {2, AddCIDependency },
+                {3, ListDependencies }
             };
             _dbContext = new AppDbContext();
             _configItemManager = new ConfigurationItemManager(_dbContext, _menuManager);
@@ -61,6 +63,13 @@ namespace CMDB.Managers
         {
             Console.Clear();
             _configItemManager.AddDependency();
+            LoadMainScreen();
+        }
+
+        private void ListDependencies()
+        {
+            Console.Clear();
+            _configItemManager.ListDependencies();
             LoadMainScreen();
         }
     }
