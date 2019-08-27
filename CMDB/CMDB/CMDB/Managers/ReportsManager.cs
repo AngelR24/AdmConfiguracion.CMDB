@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CMDB.Models;
@@ -25,12 +26,17 @@ namespace CMDB.Managers
             return BuildNodesForCi(node, 0);
         }
 
+        public void PrintNodeTree(CINode node)
+        {
+            PrintNodeTree(node, 0);
+        }
+
         private CINode BuildNodesForCi(CINode node, int level)
         {
-            var children = _dbContext.Dependencies.Where(di => di.BaseCIName == node.Value.Name)
-                .Select(di => new CINode {Value = di.DependencyCI}).ToList();
+            var children = _dbContext.Dependencies.Where(di => di.DependencyCIName == node.Value.Name)
+                .Select(di => new CINode {Value = di.BaseCI}).ToList();
 
-            if (children.Count() > 0)
+            if (children.Count > 0)
             {
                 var resultNodes = new List<CINode>();
 
@@ -56,6 +62,31 @@ namespace CMDB.Managers
             }
 
             return node;
+        }
+
+        private void PrintNodeTree(CINode node, int level)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            
+            Console.Write('|');
+            Console.Write(new string('-', level * 2));
+            Console.WriteLine($"{node.Value.Name}        PERSON RESPONSIBLE IS: {node.Value.Responsible}");
+
+            if (node.Nodes != null && !node.Nodes.Any())
+            {
+                return;
+            }
+
+            if (node.Nodes != null)
+            {
+                foreach (var childNode in node.Nodes)
+                {
+                    PrintNodeTree(childNode, level + 1);
+                }
+            }
         }
     }
 }
