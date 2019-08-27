@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CMDB.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMDB.Managers
 {
@@ -62,8 +63,33 @@ namespace CMDB.Managers
                 }
             }
 
-            int[] versionChunks = writtenVersion.Split('.').Select(str => Int32.Parse(str)).ToArray();
-            
+            int[] newVersionChunks = writtenVersion.Split('.').Select(str => Int32.Parse(str)).ToArray();
+            int[] oldVersionChunks = ci.Version.Split('.').Select(str => Int32.Parse(str)).ToArray();
+            //0 => Major //1 => Minor //2 => Patch
+            if (oldVersionChunks[0] != newVersionChunks[0])
+            {
+                Console.WriteLine("Detected Major Change in versions");
+                Console.WriteLine("Dangerous Action!");
+            }
+            else if (oldVersionChunks[1] != newVersionChunks[1])
+            {
+                Console.WriteLine("Detected Minor Change in versions");
+                Console.WriteLine("It is possible that certain Items may be affected");
+                _dbContext.Entry(ci).State = EntityState.Modified;
+                _dbContext.SaveChanges();
+            }
+            else if (oldVersionChunks[2] != newVersionChunks[2])
+            {
+                Console.WriteLine("Detected a patch change");
+                ci.Version = writtenVersion;
+                _dbContext.Entry(ci).State = EntityState.Modified;
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("No changes detected at all");
+            }
+
         }
         
         
