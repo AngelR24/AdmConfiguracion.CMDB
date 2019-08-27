@@ -58,7 +58,7 @@ namespace CMDB.Managers
             var mainItem = _dbContext.ConfigurationItems.Find(mainCI.ToUpper());
             if (mainItem == null)
             {
-                _menuManager.InvalidInputMessage("CI was not found");
+                _menuManager.PerformConsolePause("CI was not found");
                 return;
             }
             Console.Write("Dependant Configuration Item: ");
@@ -66,7 +66,7 @@ namespace CMDB.Managers
             var dependantItem = _dbContext.ConfigurationItems.Find(dependantCI.ToUpper());
             if (dependantItem == null)
             {
-                _menuManager.InvalidInputMessage("CI was not found");
+                _menuManager.PerformConsolePause("CI was not found");
                 return;
                 
             }
@@ -104,7 +104,7 @@ namespace CMDB.Managers
             var configurationItem = _dbContext.ConfigurationItems.Find(BaseCI.ToUpper());
             if (string.IsNullOrEmpty(BaseCI) || configurationItem == null)
             {
-                _menuManager.InvalidInputMessage("CI was not found");
+                _menuManager.PerformConsolePause("CI was not found");
                 return;
             }
             var items = _dbContext.Dependencies.Where(q => q.BaseCIName == BaseCI.ToUpper()).ToList();          

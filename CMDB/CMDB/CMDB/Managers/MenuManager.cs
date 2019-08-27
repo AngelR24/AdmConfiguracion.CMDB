@@ -32,13 +32,13 @@ namespace CMDB.Managers
 
             if (!result)
             {
-                InvalidInputMessage();
+                PerformConsolePause();
                 return -1;
             }
 
             if (option < 1 || option > _menuItems.Count + 1)
             {
-                InvalidInputMessage();
+                PerformConsolePause();
                 return -1;
             }
 
@@ -52,7 +52,7 @@ namespace CMDB.Managers
           
         }
 
-        public void InvalidInputMessage(string message = "Invalid input..")
+        public void PerformConsolePause(string message = "Invalid input..")
         {
             Console.WriteLine(message);
             Console.ReadKey();

@@ -37,7 +37,7 @@ namespace CMDB.Managers
             var ci = _dbContext.ConfigurationItems.Find(selectedCi);
             if (ci == null)
             {
-                _menuManager.InvalidInputMessage("The given configuration item was not found in the database");
+                _menuManager.PerformConsolePause("The given configuration item was not found in the database");
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace CMDB.Managers
 
             while (!versionValid)
             {
-                Console.Write("Enter new version (0.0.0): ");
+                Console.Write($"Enter new version ({ci.Version}): ");
                 string version = Console.ReadLine()?.ToUpper();
 
                 var match = Regex.Match(version, _semVerPattern, RegexOptions.IgnoreCase);
@@ -89,6 +89,8 @@ namespace CMDB.Managers
             {
                 Console.WriteLine("No changes detected at all");
             }
+            
+            _menuManager.PerformConsolePause("Press any key to continue...");
 
         }
         
