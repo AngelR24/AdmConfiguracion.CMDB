@@ -75,6 +75,7 @@ namespace CMDB.Managers
             {
                 Console.WriteLine("Detected Minor Change in versions");
                 Console.WriteLine("It is possible that certain Items may be affected");
+                ci.Version = writtenVersion;
                 _dbContext.Entry(ci).State = EntityState.Modified;
                 _dbContext.SaveChanges();
             }
