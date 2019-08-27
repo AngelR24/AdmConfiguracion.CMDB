@@ -26,7 +26,8 @@ namespace CMDB.Managers
             {
                 {1, AddNewCI },
                 {2, AddCIDependency },
-                {3, ListDependencies }
+                {3, ListDependencies },
+                {4, UpgradeConfigurationItem}
             };
             _dbContext = new AppDbContext();
             _configItemManager = new ConfigurationItemManager(_dbContext, _menuManager);

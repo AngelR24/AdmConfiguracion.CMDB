@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using CMDB.Models;
 
 namespace CMDB.Managers
@@ -8,6 +9,7 @@ namespace CMDB.Managers
         private readonly AppDbContext _dbContext;
         private readonly MenuManager _menuManager;
         private readonly ConfigurationItemManager _configurationItemManager;
+        private readonly string _semVerPattern;
 
         public UpgradesManager(
             AppDbContext dbContext, 
@@ -17,6 +19,7 @@ namespace CMDB.Managers
             _dbContext = dbContext;
             _menuManager = menuManager;
             _configurationItemManager = configurationItemManager;
+            _semVerPattern = @"^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$";
         }
 
         public void PerfomCiUpgradeOrDowngrade()
@@ -25,7 +28,37 @@ namespace CMDB.Managers
             Console.WriteLine(new string('-', 25));
             _configurationItemManager.ListCIWithVersion();
             Console.WriteLine(new string('-', 25));
-            Console.Write("Select Configuration Item to Ugrade/Downgrade");
+            Console.Write("Select Configuration Item to Ugrade/Downgrade: ");
+
+            string selectedCi = Console.ReadLine()?.ToUpper();
+
+            var ci = _dbContext.ConfigurationItems.Find(selectedCi);
+            if (ci == null)
+            {
+                _menuManager.InvalidInputMessage("The given configuration item was not found in the database");
+                return;
+            }
+
+            bool versionValid = false;
+
+            while (!versionValid)
+            {
+                Console.Write("Enter new version (0.0.0): ");
+                string version = Console.ReadLine()?.ToUpper();
+
+                var match = Regex.Match(version, _semVerPattern, RegexOptions.IgnoreCase);
+
+                if (match.Success)
+                {
+                    versionValid = true;
+                }
+                else
+                {
+                    Console.Write("      YOU ENTERED AN INVALID SEMANTIC VERSION NUMBER");
+                    Console.WriteLine();
+                }
+
+            }
         }
         
         
