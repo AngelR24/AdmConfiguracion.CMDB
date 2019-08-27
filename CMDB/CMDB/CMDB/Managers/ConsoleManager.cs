@@ -17,6 +17,7 @@ namespace CMDB.Managers
         private readonly Dictionary<int, Action> _menuActions;
         private readonly AppDbContext _dbContext;
         private readonly ConfigurationItemManager _configItemManager;
+        private readonly UpgradesManager _upgradesManager;
 
         public ConsoleManager()
         {
@@ -29,6 +30,7 @@ namespace CMDB.Managers
             };
             _dbContext = new AppDbContext();
             _configItemManager = new ConfigurationItemManager(_dbContext, _menuManager);
+            _upgradesManager = new UpgradesManager(_dbContext, _menuManager, _configItemManager);
         }
 
         public void Start()
@@ -71,6 +73,13 @@ namespace CMDB.Managers
         {
             Console.Clear();
             _configItemManager.ListDependencies();
+            LoadMainScreen();
+        }
+
+        private void UpgradeConfigurationItem()
+        {
+            Console.Clear();
+            _upgradesManager.PerfomCiUpgradeOrDowngrade();
             LoadMainScreen();
         }
     }

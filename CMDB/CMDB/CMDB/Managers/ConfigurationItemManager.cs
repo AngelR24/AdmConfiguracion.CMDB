@@ -124,5 +124,14 @@ namespace CMDB.Managers
             Console.WriteLine("\nPress any key to continue..");
             Console.ReadKey();
         }
+
+        public void ListCIWithVersion()
+        {
+            var cis = _dbContext.ConfigurationItems.ToList();
+            foreach (var item in cis)
+            {
+                Console.WriteLine($"* {item.Name}        {item.Version}");
+            }
+        }
     }
 }
