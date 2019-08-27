@@ -18,6 +18,7 @@ namespace CMDB.Managers
         private readonly AppDbContext _dbContext;
         private readonly ConfigurationItemManager _configItemManager;
         private readonly UpgradesManager _upgradesManager;
+        private readonly ReportsManager _reportsManager;
 
         public ConsoleManager()
         {
@@ -31,7 +32,8 @@ namespace CMDB.Managers
             };
             _dbContext = new AppDbContext();
             _configItemManager = new ConfigurationItemManager(_dbContext, _menuManager);
-            _upgradesManager = new UpgradesManager(_dbContext, _menuManager, _configItemManager);
+            _reportsManager = new ReportsManager();
+            _upgradesManager = new UpgradesManager(_dbContext, _menuManager, _configItemManager, _reportsManager);
         }
 
         public void Start()

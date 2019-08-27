@@ -11,16 +11,19 @@ namespace CMDB.Managers
         private readonly AppDbContext _dbContext;
         private readonly MenuManager _menuManager;
         private readonly ConfigurationItemManager _configurationItemManager;
+        private readonly ReportsManager _reportsManager;
         private readonly string _semVerPattern;
 
         public UpgradesManager(
             AppDbContext dbContext, 
             MenuManager menuManager,
-            ConfigurationItemManager configurationItemManager)
+            ConfigurationItemManager configurationItemManager,
+            ReportsManager reportsManager)
         {
             _dbContext = dbContext;
             _menuManager = menuManager;
             _configurationItemManager = configurationItemManager;
+            _reportsManager = reportsManager;
             _semVerPattern = @"^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$";
         }
 
