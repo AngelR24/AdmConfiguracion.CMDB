@@ -97,5 +97,32 @@ namespace CMDB.Managers
             }
         }
 
+        public void ListDependencies()
+        {
+            ListItems();
+            string BaseCI = Console.ReadLine();
+            var configurationItem = _dbContext.ConfigurationItems.Find(BaseCI.ToUpper());
+            if (string.IsNullOrEmpty(BaseCI) || configurationItem == null)
+            {
+                _menuManager.InvalidInputMessage("CI was not found");
+                return;
+            }
+            var items = _dbContext.Dependencies.Where(q => q.BaseCIName == BaseCI.ToUpper()).ToList();          
+
+            if (items.Count == 0)
+            {
+                Console.WriteLine("This CI has no dependant CIs");
+            }
+            else
+            {
+                Console.WriteLine($"The next CI are dependant of {BaseCI.ToUpper()}:");
+                foreach (var item in items)
+                {
+                    Console.WriteLine($"*{item.DependencyCIName} {item.DependencyCI.Version}");
+                }
+            }            
+            Console.WriteLine("\nPress any key to continue..");
+            Console.ReadKey();
+        }
     }
 }
