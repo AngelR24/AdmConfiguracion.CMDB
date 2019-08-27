@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using CMDB.Models;
 
@@ -40,6 +41,7 @@ namespace CMDB.Managers
             }
 
             bool versionValid = false;
+            string writtenVersion = "0.0.0";
 
             while (!versionValid)
             {
@@ -51,14 +53,17 @@ namespace CMDB.Managers
                 if (match.Success)
                 {
                     versionValid = true;
+                    writtenVersion = version;
                 }
                 else
                 {
                     Console.Write("      YOU ENTERED AN INVALID SEMANTIC VERSION NUMBER");
                     Console.WriteLine();
                 }
-
             }
+
+            int[] versionChunks = writtenVersion.Split('.').Select(str => Int32.Parse(str)).ToArray();
+            
         }
         
         
