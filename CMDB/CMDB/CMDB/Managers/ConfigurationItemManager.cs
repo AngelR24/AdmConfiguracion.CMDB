@@ -100,14 +100,21 @@ namespace CMDB.Managers
         public void ListDependencies()
         {
             ListItems();
-            string BaseCI = Console.ReadLine();
-            var configurationItem = _dbContext.ConfigurationItems.Find(BaseCI.ToUpper());
-            if (string.IsNullOrEmpty(BaseCI) || configurationItem == null)
+            Console.Write("Specify a CI: ");
+            string baseCI = Console.ReadLine();
+            FindDependencies(baseCI);
+           
+        }
+
+        public void FindDependencies(string baseCI)
+        {
+            var configurationItem = _dbContext.ConfigurationItems.Find(baseCI.ToUpper());
+            if (string.IsNullOrEmpty(baseCI) || configurationItem == null)
             {
                 _menuManager.PerformConsolePause("CI was not found");
                 return;
             }
-            var items = _dbContext.Dependencies.Where(q => q.BaseCIName == BaseCI.ToUpper()).ToList();          
+            var items = _dbContext.Dependencies.Where(q => q.BaseCIName == baseCI.ToUpper()).ToList();
 
             if (items.Count == 0)
             {
@@ -115,16 +122,16 @@ namespace CMDB.Managers
             }
             else
             {
-                Console.WriteLine($"The next CI are dependant of {BaseCI.ToUpper()}:");
+                Console.WriteLine();
+                Console.WriteLine($"The next CIs are dependant on {baseCI.ToUpper()}:");
                 foreach (var item in items)
                 {
-                    Console.WriteLine($"*{item.DependencyCIName} {item.DependencyCI.Version}");
+                    Console.WriteLine($"*{item.DependencyCIName} {item.DependencyCI.Version} Responsible person: {item.DependencyCI.Responsible}");
                 }
-            }            
+            }
             Console.WriteLine("\nPress any key to continue..");
             Console.ReadKey();
         }
-
         public void ListCIWithVersion()
         {
             var cis = _dbContext.ConfigurationItems.ToList();
