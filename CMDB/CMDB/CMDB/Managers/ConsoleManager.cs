@@ -11,7 +11,8 @@ namespace CMDB.Managers
         {
             "Add new CI", //Option 1
             "Add dependency CI", //Option 2
-            "List dependencies" //Option 3
+            "List dependencies", //Option 3
+            "Upgrading CI"
         };
         private readonly Dictionary<int, Action> _menuActions;
         private readonly AppDbContext _dbContext;
