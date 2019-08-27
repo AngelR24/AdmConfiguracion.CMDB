@@ -87,6 +87,7 @@ namespace CMDB.Managers
             
         }
 
+    
         public void ListItems()
         {
             var items = _dbContext.ConfigurationItems.ToList();
@@ -123,7 +124,7 @@ namespace CMDB.Managers
             else
             {
                 Console.WriteLine();
-                Console.WriteLine($"The next CIs are dependant on {baseCI.ToUpper()}:");
+                Console.WriteLine($"The following CIs are dependant on {baseCI.ToUpper()}:");
                 foreach (var item in items)
                 {
                     Console.WriteLine($"*{item.DependencyCIName} {item.DependencyCI.Version} Responsible person: {item.DependencyCI.Responsible}");
@@ -132,6 +133,17 @@ namespace CMDB.Managers
             Console.WriteLine("\nPress any key to continue..");
             Console.ReadKey();
         }
+
+        public void DeprecateCI()
+        {
+            ListItems();
+            Console.Write("Specify a CI to deprecate: ");
+            string baseCI = Console.ReadLine();
+            Console.WriteLine("Before deprecating any CI, it is mandatory that you speak to all the responsible people of the dependant CIs");
+            FindDependencies(baseCI);
+        }
+
+
         public void ListCIWithVersion()
         {
             var cis = _dbContext.ConfigurationItems.ToList();

@@ -12,7 +12,8 @@ namespace CMDB.Managers
             "Add new CI", //Option 1
             "Add dependency CI", //Option 2
             "List dependencies", //Option 3
-            "Upgrading CI"
+            "Upgrading CI",
+            "Deprecate CI"
         };
         private readonly Dictionary<int, Action> _menuActions;
         private readonly AppDbContext _dbContext;
@@ -28,7 +29,8 @@ namespace CMDB.Managers
                 {1, AddNewCI },
                 {2, AddCIDependency },
                 {3, ListDependencies },
-                {4, UpgradeConfigurationItem}
+                {4, UpgradeConfigurationItem},
+                {5, DeprecateConfigurationItem }
             };
             _dbContext = new AppDbContext();
             _configItemManager = new ConfigurationItemManager(_dbContext, _menuManager);
@@ -83,6 +85,13 @@ namespace CMDB.Managers
         {
             Console.Clear();
             _upgradesManager.PerfomCiUpgradeOrDowngrade();
+            LoadMainScreen();
+        }
+
+        private void DeprecateConfigurationItem()
+        {
+            Console.Clear();
+            _configItemManager.DeprecateCI();
             LoadMainScreen();
         }
     }
