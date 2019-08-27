@@ -32,7 +32,7 @@ namespace CMDB.Managers
             };
             _dbContext = new AppDbContext();
             _configItemManager = new ConfigurationItemManager(_dbContext, _menuManager);
-            _reportsManager = new ReportsManager();
+            _reportsManager = new ReportsManager(_dbContext, _configItemManager);
             _upgradesManager = new UpgradesManager(_dbContext, _menuManager, _configItemManager, _reportsManager);
         }
 

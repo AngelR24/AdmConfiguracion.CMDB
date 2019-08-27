@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CMDB.Models.Dtos
 {
     /// <summary>
@@ -7,6 +9,6 @@ namespace CMDB.Models.Dtos
     {
         public ConfigurationItem Value { get; set; }
         
-        public CINode Node { get; set; }
+        public IEnumerable<CINode> Nodes { get; set; }
     }
 }
