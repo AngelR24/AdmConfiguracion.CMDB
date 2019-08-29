@@ -140,7 +140,16 @@ namespace CMDB.Managers
             Console.Write("Specify a CI to deprecate: ");
             string baseCI = Console.ReadLine();
             Console.WriteLine("Before deprecating any CI, it is mandatory that you speak to all the responsible people of the dependant CIs");
-            FindDependencies(baseCI);
+
+            var reports = new ReportsManager(_dbContext, this);
+
+            var found = _dbContext.ConfigurationItems.Find(baseCI.ToUpper());
+
+            var node = reports.BuildNodesForCi(found);
+
+            reports.PrintNodeTree(node);
+
+            Console.ReadKey();
         }
 
 

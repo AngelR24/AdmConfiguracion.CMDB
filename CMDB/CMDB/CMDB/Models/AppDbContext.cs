@@ -12,7 +12,7 @@ namespace CMDB.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-1V75BQG;Database=CMDB;User=sa;Password=Wepsys123@;");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=CMDB;User=sa;Password=Wepsys123@;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

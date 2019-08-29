@@ -76,6 +76,7 @@ namespace CMDB.Managers
             {
                 Console.WriteLine("Detected Major Change in versions");
                 Console.WriteLine("Dangerous Action!");
+                Console.WriteLine("Changes were not saved !");
                 Console.WriteLine("HERE IS THE HIERARCHY TREE");
                 _reportsManager.PrintNodeTree(node);
             }

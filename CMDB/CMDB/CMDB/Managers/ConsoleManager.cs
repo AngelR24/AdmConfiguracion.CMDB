@@ -77,7 +77,9 @@ namespace CMDB.Managers
         private void ListDependencies()
         {
             Console.Clear();
-            _configItemManager.ListDependencies();
+
+            _reportsManager.ListDependencies();
+
             LoadMainScreen();
         }
 

@@ -31,6 +31,29 @@ namespace CMDB.Managers
             PrintNodeTree(node, 0);
         }
 
+        public void ListDependencies()
+        {
+            Console.Clear();
+            Console.WriteLine("List Dependencies");
+            _configurationItemManager.ListItems();
+
+            Console.WriteLine(new string('-', 20));
+            Console.Write("Main Configuration Item: ");
+            string mainCI = Console.ReadLine();
+            var mainItem = _dbContext.ConfigurationItems.Find(mainCI.ToUpper());
+            if (mainItem == null)
+            {
+                Console.WriteLine("CI not found");
+                Console.ReadKey();
+                return;
+            }
+
+            var node = BuildNodesForCi(mainItem);
+
+            PrintNodeTree(node);
+            Console.ReadKey();
+        }
+
         private CINode BuildNodesForCi(CINode node, int level)
         {
             var children = _dbContext.Dependencies.Where(di => di.DependencyCIName == node.Value.Name)
